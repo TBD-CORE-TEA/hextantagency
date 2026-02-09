@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import AuthLayout from './components/AuthLayout'
+import DashboardLayout from './components/DashboardLayout'
 import Home from './pages/Home'
 import Services from './pages/Services'
 import Solutions from './pages/Solutions'
@@ -16,6 +17,13 @@ import AIUsagePolicy from './pages/AIUsagePolicy'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import ForgotPassword from './pages/ForgotPassword'
+
+// Dashboard pages
+import DashboardOverview from './pages/dashboard/DashboardOverview'
+import AgentsPage from './pages/dashboard/AgentsPage'
+import AgentDetailsPage from './pages/dashboard/AgentDetailsPage'
+import TasksPage from './pages/dashboard/TasksPage'
+import MonitoringPage from './pages/dashboard/MonitoringPage'
 
 export default function App() {
   return (
@@ -41,6 +49,15 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+      </Route>
+
+      {/* Dashboard pages (authenticated) */}
+      <Route element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<DashboardOverview />} />
+        <Route path="/dashboard/agents" element={<AgentsPage />} />
+        <Route path="/dashboard/agents/:id" element={<AgentDetailsPage />} />
+        <Route path="/dashboard/tasks" element={<TasksPage />} />
+        <Route path="/dashboard/monitoring" element={<MonitoringPage />} />
       </Route>
     </Routes>
   )

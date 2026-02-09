@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaGoogle, FaGithub, FaMicrosoft, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaBuilding, FaCheck, FaRocket, FaCheckCircle } from 'react-icons/fa'
 import { useMagnetic } from '../hooks/useAnimations'
 
@@ -147,6 +147,7 @@ function AnimatedInput({ icon: Icon, delay = 0, ...props }) {
 }
 
 export default function SignUp() {
+  const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [form, setForm] = useState({ name: '', email: '', company: '', password: '', plan: 'professional' })
   const [showPassword, setShowPassword] = useState(false)
@@ -204,9 +205,16 @@ export default function SignUp() {
             <button className="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-gray-300 text-sm font-medium hover:bg-white/10 hover:-translate-y-0.5 transition-all">
               Resend Verification Email
             </button>
+            <button
+              type="button"
+              onClick={() => navigate('/dashboard')}
+              className="block w-full py-3 rounded-xl bg-gradient-to-r from-primary to-primary-light text-white text-sm font-semibold text-center hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5 transition-all"
+            >
+              Go to Dashboard (Demo)
+            </button>
             <Link
               to="/login"
-              className="block w-full py-3 rounded-xl bg-gradient-to-r from-primary to-primary-light text-white text-sm font-semibold text-center hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5 transition-all"
+              className="block w-full py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-medium text-center hover:bg-white/5 transition-all"
             >
               Go to Login
             </Link>

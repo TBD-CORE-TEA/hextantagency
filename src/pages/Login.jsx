@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaGoogle, FaGithub, FaMicrosoft, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaShieldAlt } from 'react-icons/fa'
 import { useMagnetic } from '../hooks/useAnimations'
 
@@ -88,6 +88,7 @@ function AnimatedInput({ icon: Icon, delay = 0, ...props }) {
 }
 
 export default function Login() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [showMFA, setShowMFA] = useState(false)
@@ -117,7 +118,7 @@ export default function Login() {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
-      alert('Login successful! (Demo)')
+      navigate('/dashboard')
     }, 800)
   }
 
