@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FaCheck, FaArrowRight, FaTimes } from 'react-icons/fa'
 import { PageHero, CTAButton, SectionHeading } from '../components/UI'
+import { Reveal, StaggerChildren, TiltCard, AnimatedBorder } from '../components/Animated'
 
 const tiers = [
   {
@@ -102,55 +103,57 @@ export default function Pricing() {
       {/* Pricing Cards */}
       <section className="py-16 sm:py-20 lg:py-28 -mt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          <StaggerChildren stagger={0.15} direction="up" className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {tiers.map((tier) => (
-              <div
-                key={tier.name}
-                className={`relative rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 ${
-                  tier.popular
-                    ? 'bg-gradient-to-b from-primary/10 to-surface border-2 border-primary/40 shadow-lg shadow-primary/10'
-                    : 'bg-surface border border-white/5'
-                }`}
-              >
-                {tier.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-primary to-primary-light text-white text-xs font-bold">
-                    Most Popular
-                  </span>
-                )}
-                <h3 className="text-xl font-bold text-white">{tier.name}</h3>
-                <p className="text-gray-400 text-sm mt-1 mb-6">{tier.description}</p>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-white">
-                    {tier.price === 'Custom'
-                      ? 'Custom'
-                      : annual
-                      ? `$${Math.round(parseInt(tier.price.replace(/[^0-9]/g, '')) * 0.8).toLocaleString()}`
-                      : tier.price}
-                  </span>
-                  {tier.period && <span className="text-gray-400 text-sm">{tier.period}</span>}
-                </div>
-                <CTAButton
-                  to="/contact"
-                  variant={tier.popular ? 'primary' : 'secondary'}
-                  className="w-full mb-8"
+              <TiltCard key={tier.name} className="rounded-2xl" glowColor={tier.popular ? 'rgba(108, 63, 227, 0.2)' : 'rgba(108, 63, 227, 0.1)'}>
+                <div
+                  className={`relative rounded-2xl p-6 lg:p-8 transition-all duration-300 ${
+                    tier.popular
+                      ? 'bg-gradient-to-b from-primary/10 to-surface border-2 border-primary/40 shadow-lg shadow-primary/10'
+                      : 'bg-surface border border-white/5'
+                  }`}
                 >
-                  {tier.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
-                </CTAButton>
-                <ul className="space-y-3">
-                  {tier.features.map((f) => (
-                    <li key={f.text} className="flex items-start gap-3">
-                      {f.included ? (
-                        <FaCheck className="text-secondary mt-0.5 flex-shrink-0 text-sm" />
-                      ) : (
-                        <FaTimes className="text-gray-600 mt-0.5 flex-shrink-0 text-sm" />
-                      )}
-                      <span className={f.included ? 'text-gray-300 text-sm' : 'text-gray-600 text-sm'}>{f.text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  {tier.popular && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-primary to-primary-light text-white text-xs font-bold">
+                      Most Popular
+                    </span>
+                  )}
+                  <h3 className="text-xl font-bold text-white">{tier.name}</h3>
+                  <p className="text-gray-400 text-sm mt-1 mb-6">{tier.description}</p>
+                  <div className="mb-6">
+                    <span className="text-4xl font-bold text-white">
+                      {tier.price === 'Custom'
+                        ? 'Custom'
+                        : annual
+                        ? `$${Math.round(parseInt(tier.price.replace(/[^0-9]/g, '')) * 0.8).toLocaleString()}`
+                        : tier.price}
+                    </span>
+                    {tier.period && <span className="text-gray-400 text-sm">{tier.period}</span>}
+                  </div>
+                  <CTAButton
+                    to="/contact"
+                    variant={tier.popular ? 'primary' : 'secondary'}
+                    className="w-full mb-8"
+                    magnetic={tier.popular}
+                  >
+                    {tier.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
+                  </CTAButton>
+                  <ul className="space-y-3">
+                    {tier.features.map((f) => (
+                      <li key={f.text} className="flex items-start gap-3">
+                        {f.included ? (
+                          <FaCheck className="text-secondary mt-0.5 flex-shrink-0 text-sm" />
+                        ) : (
+                          <FaTimes className="text-gray-600 mt-0.5 flex-shrink-0 text-sm" />
+                        )}
+                        <span className={f.included ? 'text-gray-300 text-sm' : 'text-gray-600 text-sm'}>{f.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </TiltCard>
             ))}
-          </div>
+          </StaggerChildren>
         </div>
       </section>
 
@@ -162,15 +165,17 @@ export default function Pricing() {
             title="Customize Your Plan"
             description="Enhance any tier with powerful add-ons to match your specific needs."
           />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <StaggerChildren stagger={0.1} direction="up" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {addons.map((addon) => (
-              <div key={addon.name} className="p-6 rounded-2xl bg-surface border border-white/5 hover:border-primary/30 transition-all duration-300">
-                <h4 className="text-white font-semibold mb-1">{addon.name}</h4>
-                <span className="text-primary-light text-sm font-medium">{addon.price}</span>
-                <p className="text-gray-400 text-sm mt-2">{addon.description}</p>
-              </div>
+              <AnimatedBorder key={addon.name}>
+                <div className="p-6 hover:bg-surface-light/30 transition-colors duration-300">
+                  <h4 className="text-white font-semibold mb-1">{addon.name}</h4>
+                  <span className="text-primary-light text-sm font-medium">{addon.price}</span>
+                  <p className="text-gray-400 text-sm mt-2">{addon.description}</p>
+                </div>
+              </AnimatedBorder>
             ))}
-          </div>
+          </StaggerChildren>
         </div>
       </section>
 
@@ -180,18 +185,20 @@ export default function Pricing() {
           <SectionHeading tag="FAQ" title="Frequently Asked Questions" />
           <div className="space-y-3">
             {faqs.map((faq, i) => (
-              <div key={i} className="rounded-xl bg-surface border border-white/5 overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left"
-                >
-                  <span className="text-white font-medium pr-4">{faq.q}</span>
-                  <span className={`text-gray-400 transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
-                </button>
-                <div className={`overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-40 pb-5' : 'max-h-0'}`}>
-                  <p className="px-5 text-gray-400 text-sm leading-relaxed">{faq.a}</p>
+              <Reveal key={i} direction="up" delay={i * 0.06}>
+                <div className="rounded-xl bg-surface border border-white/5 overflow-hidden hover:border-primary/20 transition-all duration-300">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="w-full flex items-center justify-between p-5 text-left"
+                  >
+                    <span className="text-white font-medium pr-4">{faq.q}</span>
+                    <span className={`text-gray-400 transition-transform duration-300 ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-40 pb-5' : 'max-h-0'}`}>
+                    <p className="px-5 text-gray-400 text-sm leading-relaxed">{faq.a}</p>
+                  </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -200,11 +207,13 @@ export default function Pricing() {
       {/* CTA */}
       <section className="py-16 sm:py-20 lg:py-28 bg-surface/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Not Sure Which Plan Is Right?</h2>
-          <p className="text-gray-400 text-lg mb-8">Talk to our team and we'll recommend the best setup for your needs and budget.</p>
-          <CTAButton to="/contact" variant="primary">
-            Talk to Sales <FaArrowRight />
-          </CTAButton>
+          <Reveal direction="up">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Not Sure Which Plan Is Right?</h2>
+            <p className="text-gray-400 text-lg mb-8">Talk to our team and we'll recommend the best setup for your needs and budget.</p>
+            <CTAButton to="/contact" variant="primary" magnetic>
+              Talk to Sales <FaArrowRight />
+            </CTAButton>
+          </Reveal>
         </div>
       </section>
     </>

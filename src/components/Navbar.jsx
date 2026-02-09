@@ -121,6 +121,12 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
             <Link
+              to="/login"
+              className="px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-200"
+            >
+              Log In
+            </Link>
+            <Link
               to="/contact"
               className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-primary to-primary-light text-white text-sm font-semibold hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:-translate-y-0.5"
             >
@@ -160,7 +166,14 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <div className="pt-4">
+          <div className="pt-4 space-y-2">
+            <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="block text-center px-5 py-3 rounded-lg bg-white/5 border border-white/10 text-white text-sm font-medium"
+            >
+              Log In
+            </Link>
             <Link
               to="/contact"
               onClick={() => setOpen(false)}

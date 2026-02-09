@@ -1,5 +1,6 @@
 import { FaChartLine, FaHeadset, FaSearch, FaCogs, FaIndustry, FaHospital, FaGavel, FaShoppingCart, FaArrowRight, FaCheckCircle } from 'react-icons/fa'
 import { PageHero, SectionHeading, CTAButton } from '../components/UI'
+import { Reveal, StaggerChildren, TiltCard, AnimatedBorder } from '../components/Animated'
 
 const solutions = [
   {
@@ -52,31 +53,35 @@ export default function Solutions() {
       <section className="py-16 sm:py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           {solutions.map((sol, i) => (
-            <div key={sol.title} className="rounded-2xl bg-surface border border-white/5 overflow-hidden hover:border-primary/20 transition-all duration-300">
-              <div className="grid lg:grid-cols-5 gap-0">
-                {/* Info */}
-                <div className="lg:col-span-3 p-6 sm:p-8 lg:p-10">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${sol.color} flex items-center justify-center`}>
-                      <span className="text-2xl text-primary-light">{sol.icon}</span>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white">{sol.title}</h3>
-                  </div>
-                  <p className="text-gray-400 text-lg mb-6">{sol.description}</p>
-                  <div className="grid sm:grid-cols-2 gap-2">
-                    {sol.capabilities.map((cap) => (
-                      <div key={cap} className="flex items-center gap-2 text-gray-300 text-sm">
-                        <FaCheckCircle className="text-secondary flex-shrink-0 text-xs" /> {cap}
+            <Reveal key={sol.title} direction={i % 2 === 0 ? 'left' : 'right'} delay={0.1}>
+              <TiltCard className="rounded-2xl" glowColor={i % 2 === 0 ? 'rgba(108, 63, 227, 0.12)' : 'rgba(6, 214, 160, 0.12)'}>
+                <div className="rounded-2xl bg-surface border border-white/5 overflow-hidden hover:border-primary/20 transition-all duration-300">
+                  <div className="grid lg:grid-cols-5 gap-0">
+                    {/* Info */}
+                    <div className="lg:col-span-3 p-6 sm:p-8 lg:p-10">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${sol.color} flex items-center justify-center`}>
+                          <span className="text-2xl text-primary-light">{sol.icon}</span>
+                        </div>
+                        <h3 className="text-2xl font-bold text-white">{sol.title}</h3>
                       </div>
-                    ))}
+                      <p className="text-gray-400 text-lg mb-6">{sol.description}</p>
+                      <div className="grid sm:grid-cols-2 gap-2">
+                        {sol.capabilities.map((cap) => (
+                          <div key={cap} className="flex items-center gap-2 text-gray-300 text-sm">
+                            <FaCheckCircle className="text-secondary flex-shrink-0 text-xs" /> {cap}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Visual */}
+                    <div className={`lg:col-span-2 bg-gradient-to-br ${sol.color} p-8 flex items-center justify-center min-h-[200px]`}>
+                      <span className="text-7xl opacity-20">{sol.icon}</span>
+                    </div>
                   </div>
                 </div>
-                {/* Visual */}
-                <div className={`lg:col-span-2 bg-gradient-to-br ${sol.color} p-8 flex items-center justify-center min-h-[200px]`}>
-                  <span className="text-7xl opacity-20">{sol.icon}</span>
-                </div>
-              </div>
-            </div>
+              </TiltCard>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -89,30 +94,34 @@ export default function Solutions() {
             title="Industry-Specific Solutions"
             description="We build agents that understand the language, regulations, and workflows of your industry."
           />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StaggerChildren stagger={0.12} direction="up" className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {industries.map((ind) => (
-              <div key={ind.name} className="p-6 rounded-2xl bg-surface border border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 group">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                  <span className="text-2xl text-primary-light">{ind.icon}</span>
+              <AnimatedBorder key={ind.name}>
+                <div className="p-6 hover:-translate-y-1 transition-all duration-300 group">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                    <span className="text-2xl text-primary-light">{ind.icon}</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">{ind.name}</h3>
+                  <p className="text-gray-400 text-sm">{ind.desc}</p>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">{ind.name}</h3>
-                <p className="text-gray-400 text-sm">{ind.desc}</p>
-              </div>
+              </AnimatedBorder>
             ))}
-          </div>
+          </StaggerChildren>
         </div>
       </section>
 
       {/* CTA */}
       <section className="py-16 sm:py-20 lg:py-28">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Don't See Your Use Case?</h2>
-          <p className="text-gray-400 text-lg mb-8">
-            We build custom agents for unique business challenges. Let's explore what's possible.
-          </p>
-          <CTAButton to="/contact" variant="primary">
-            Talk to an Expert <FaArrowRight />
-          </CTAButton>
+          <Reveal direction="up">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Don't See Your Use Case?</h2>
+            <p className="text-gray-400 text-lg mb-8">
+              We build custom agents for unique business challenges. Let's explore what's possible.
+            </p>
+            <CTAButton to="/contact" variant="primary" magnetic>
+              Talk to an Expert <FaArrowRight />
+            </CTAButton>
+          </Reveal>
         </div>
       </section>
     </>
